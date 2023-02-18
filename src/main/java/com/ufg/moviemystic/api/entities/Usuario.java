@@ -1,5 +1,6 @@
 package com.ufg.moviemystic.api.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,10 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ufg.moviemystic.api.dto.AvaliacaoDTO;
+import com.ufg.moviemystic.api.dto.CadastroDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -62,4 +66,20 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Avaliacao> avaliacoes;
 
+
+    @JsonProperty("cadastro")
+    private CadastroDTO getIdCadastro(){
+        return new CadastroDTO(cadastro.getId());
+    }
+
+    @JsonProperty("avaliacoes")
+    private List<AvaliacaoDTO> getIdAvaliacoes(){
+        List<AvaliacaoDTO> avaliacaoDTOList = new ArrayList<>();
+
+        for(Avaliacao avaliacao : avaliacoes ){
+            avaliacaoDTOList.add(new AvaliacaoDTO(avaliacao.getId()));
+        }
+
+        return avaliacaoDTOList;
+    }
 }

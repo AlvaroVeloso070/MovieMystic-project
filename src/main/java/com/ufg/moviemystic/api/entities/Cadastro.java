@@ -5,7 +5,9 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ufg.moviemystic.api.dto.UsuarioDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,4 +46,9 @@ public class Cadastro {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @JsonProperty("usuario")
+    public UsuarioDTO getUsuarioId(){
+        return new UsuarioDTO(usuario.getId());
+    }
 }
